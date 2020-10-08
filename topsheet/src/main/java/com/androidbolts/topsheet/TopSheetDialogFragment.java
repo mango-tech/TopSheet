@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
  */
 public class TopSheetDialogFragment extends AppCompatDialogFragment {
 
+    /**
+     * Tracks if we are waiting for a dismissAllowingStateLoss or a regular dismiss once the
+     * BottomSheet is hidden and onStateChanged() is called.
+     */
     private boolean waitingForDismissAllowingStateLoss;
 
     @NonNull
@@ -24,35 +28,35 @@ public class TopSheetDialogFragment extends AppCompatDialogFragment {
 
     @Override
     public void dismiss() {
-//        if (!tryDismissWithAnimation(false)) {
+        if (!tryDismissWithAnimation(false)) {
             super.dismiss();
-//        }
+        }
     }
 
     @Override
     public void dismissAllowingStateLoss() {
-//        if (!tryDismissWithAnimation(true)) {
+        if (!tryDismissWithAnimation(true)) {
             super.dismissAllowingStateLoss();
-//        }
+        }
     }
 
     /**
      * Tries to dismiss the dialog fragment with the bottom sheet animation. Returns true if possible,
      * false otherwise.
      */
-//    private boolean tryDismissWithAnimation(boolean allowingStateLoss) {
-//        Dialog baseDialog = getDialog();
-//        if (baseDialog instanceof TopSheetDialog) {
-//            TopSheetDialog dialog = (TopSheetDialog) baseDialog;
-//            TopSheetBehavior<?> behavior = dialog.getBehavior();
-//            if (behavior.isHideable() && dialog.getDismissWithAnimation()) {
-//                dismissWithAnimation(behavior, allowingStateLoss);
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
+    private boolean tryDismissWithAnimation(boolean allowingStateLoss) {
+        Dialog baseDialog = getDialog();
+        if (baseDialog instanceof TopSheetDialog) {
+            TopSheetDialog dialog = (TopSheetDialog) baseDialog;
+            TopSheetBehavior<?> behavior = dialog.getBehavior();
+            if (behavior.isHideable() && dialog.getDismissWithAnimation()) {
+                dismissWithAnimation(behavior, allowingStateLoss);
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private void dismissWithAnimation(
             @NonNull TopSheetBehavior<?> behavior, boolean allowingStateLoss) {
@@ -61,10 +65,10 @@ public class TopSheetDialogFragment extends AppCompatDialogFragment {
         if (behavior.getState() == TopSheetBehavior.STATE_HIDDEN) {
             dismissAfterAnimation();
         } else {
-            /*if (getDialog() instanceof TopSheetDialog) {
-                ((BottomSheetDialog) getDialog()).removeDefaultCallback();
-            }*/
-            behavior.setTopSheetCallback(new TopSheetDialogFragment.TopSheetDismissCallback());
+            if (getDialog() instanceof TopSheetDialog) {
+                ((TopSheetDialog) getDialog()).removeDefaultCallback();
+            }
+            behavior.addBottomSheetCallback(new TopSheetDismissCallback());
             behavior.setState(TopSheetBehavior.STATE_HIDDEN);
         }
     }
@@ -78,20 +82,8 @@ public class TopSheetDialogFragment extends AppCompatDialogFragment {
     }
 
     private class TopSheetDismissCallback extends TopSheetBehavior.TopSheetCallback {
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == TopSheetBehavior.STATE_HIDDEN) {
-                dismissAfterAnimation();
-            }
-        }
 
         @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset, @Nullable Boolean isOpening) {
-
-        }
-    }
-
-       /* @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
             if (newState == TopSheetBehavior.STATE_HIDDEN) {
                 dismissAfterAnimation();
@@ -100,5 +92,5 @@ public class TopSheetDialogFragment extends AppCompatDialogFragment {
 
         @Override
         public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
-    }*/
+    }
 }

@@ -14,29 +14,36 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:fitsSystemWindows="true">
 
-    <View
-        android:id="@+id/top_sheet_touch_outside"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:soundEffectsEnabled="false"/>
+        android:fitsSystemWindows="true">
 
-    <FrameLayout
-        android:id="@+id/design_top_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_height="300dp"
-        android:background="#ffffff"
-        android:layout_gravity="center_horizontal|top"
-        android:clickable="true"
-        app:layout_behavior="@string/top_sheet_behavior"
-        style="?attr/bottomSheetStyle"
-        />
+        <View
+            android:id="@+id/touch_outside"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:soundEffectsEnabled="false"
+            tools:ignore="UnusedAttribute" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <FrameLayout
+            android:id="@+id/design_top_sheet"
+            style="?attr/bottomSheetStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            app:layout_behavior="@string/top_sheet_behavior"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>
