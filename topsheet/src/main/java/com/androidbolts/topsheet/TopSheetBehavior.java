@@ -299,13 +299,21 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
                             R.styleable.BottomSheetBehavior_Layout_behavior_peekHeight, PEEK_HEIGHT_AUTO));
         }
         setHideable(a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_hideable, false));
-        setGestureInsetBottomIgnored(
-                a.getBoolean(R.styleable.BottomSheetBehavior_Layout_gestureInsetBottomIgnored, false));
+
+        // Only with higher material component versions
+//        setGestureInsetBottomIgnored(
+//                a.getBoolean(R.styleable.BottomSheetBehavior_Layout_gestureInsetBottomIgnored, false));
+        setGestureInsetBottomIgnored(false);
+
         setFitToContents(
                 a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_fitToContents, true));
         setSkipCollapsed(
                 a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_skipCollapsed, false));
-        setDraggable(a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_draggable, true));
+
+        // Only with higher material component versions
+//        setDraggable(a.getBoolean(R.styleable.BottomSheetBehavior_Layout_behavior_draggable, true));
+        setDraggable(true);
+
         setSaveFlags(a.getInt(R.styleable.BottomSheetBehavior_Layout_behavior_saveFlags, SAVE_NONE));
         setHalfExpandedRatio(
                 a.getFloat(R.styleable.BottomSheetBehavior_Layout_behavior_halfExpandedRatio, 0.5f));
